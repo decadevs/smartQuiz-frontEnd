@@ -192,7 +192,7 @@ const SignUp = () => {
                             <Modal.Body className="modal-body">
                                 <img
                                     className="email-sent-img"
-                                    src="src/assets/icons/EmailSentSuccessfully.svg"
+                                    src="../src/assets/icons/EmailSentSuccessfully.svg"
                                 />
                                 {modalMessage}
                             </Modal.Body>
