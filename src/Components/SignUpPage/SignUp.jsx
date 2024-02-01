@@ -45,9 +45,8 @@ const SignUp = () => {
 
             setModalMessage("Email Sent Successfully!");
 
-            // Set a 5-second delay before navigating to "/signin"
             setTimeout(() => {
-                navigate("/signin");
+                navigate("/signin/signin");
             }, 1000);
         } catch (error) {
             // Handle the error here
@@ -210,7 +209,7 @@ const SignUp = () => {
 
                         <p className="alreadyHaveAnAcct">
                             Already have an account?{" "}
-                            <Link to="/signin">
+                            <Link to="/signin/signin">
                                 <a href="#">Sign in here</a>
                             </Link>
                         </p>
