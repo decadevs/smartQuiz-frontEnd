@@ -5,6 +5,7 @@ import ForgotPPage from "./Pages/ForgotPPage.jsx";
 import ResetPPage from "./Pages/ResetPPage.jsx";
 import PasswordTokenPage from "./Pages/PasswordTokenPage.jsx";
 import SignUpPage from "./Pages/SignUpPage.jsx";
+import SignInPage from "./Pages/SignInPage.jsx";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<HomePage />} />
            <Route exact path="/signup" element={<SignUpPage/>}/>
+            <Route exact path="/signin/:credential" element={<SignInPage/>} />
             <Route exact path="/forgot-password" element={<ForgotPPage />} />
             <Route exact path="/reset-password" element={<PasswordTokenPage />} />
             <Route exact path="/reset-password/:token" element={<ResetPPage />} />

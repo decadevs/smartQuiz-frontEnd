@@ -1,35 +1,71 @@
 import React, { useState } from "react";
-import "./ResetP.css";
-import { useNavigate } from "react-router-dom";
+import "./SignIn.css";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { Button, Modal } from "react-bootstrap";
-import { useParams } from "react-router-dom";
 
-const ResetP = () => {
+const SignIn = () => {
     const navigate = useNavigate();
-    const { token } = useParams();
+    const { credential } = useParams();
     const [showModal, setShowModal] = useState(false);
     const [modalMessage, setModalMessage] = useState("");
     const [status, setStatus] = useState(false);
     const [successMessage, setSuccessMessage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const [user, setUser] = useState({
-        newPassword: "",
-        newConfirmPassword: "",
+        email: "",
+        password: "",
     });
 
-    const { newPassword, newConfirmPassword } = user;
+    const { email, password } = user;
 
     const onInputChange = (e) => {
         setUser({ ...user, [e.target.name]: e.target.value });
+    };
+
+    const onGoogleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await axios.get(
+                `http://localhost:8080/api/v1/user/google/${credential}`
+            );
+
+            const token = response.data;
+
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+            setShowModal(true);
+            setStatus(true);
+            setSuccessMessage("Success");
+
+            setModalMessage("Welcome to Smart Quiz App!");
+
+            setTimeout(() => {
+                navigate("/dashboard");
+            }, 800);
+        } catch (error) {
+            navigate("/dashboard");
+            // Handle the error here
+            console.error("Error during Login:", error);
+            const errorMessage =
+                error.response?.data?.message ||
+                "An error occurred during Login. Please try again.";
+
+            setStatus(false);
+            setErrorMessage("Error");
+
+            setShowModal(true);
+            setModalMessage(errorMessage);
+        }
     };
 
     const onSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            await axios.post(
-                `http://localhost:8080/api/v1/user/resetPassword/${token}`,
+            const response = await axios.post(
+                "http://localhost:8080/api/v1/user/login",
                 user,
                 {
                     headers: {
@@ -38,28 +74,29 @@ const ResetP = () => {
                 }
             );
 
+            const token = response.data;
+            console.log(token);
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
             setShowModal(true);
             setStatus(true);
             setSuccessMessage("Success");
 
-            setModalMessage("Password Updated Successfully!");
+            setModalMessage("Welcome to Smart Quiz App!");
 
             // Set a 5-second delay before navigating to "/signin"
             setTimeout(() => {
-                navigate("/signin/signin");
+                navigate("/dashboard");
             }, 1000);
         } catch (error) {
             // Handle the error here
-            console.error("Error during password reset:", error);
-            const errorMessage =
-                error.response?.data?.message ||
-                "An error occurred during password updating. Please try again.";
+            console.error("Error during Login:", error);
 
             setStatus(false);
             setErrorMessage("Error");
 
             setShowModal(true);
-            setModalMessage(errorMessage);
+            setModalMessage("Go to your email to Verify Registration");
         }
     };
 
@@ -76,40 +113,49 @@ const ResetP = () => {
                 <div className="form-table">
                     <div className="top-form">
                         <h3 className="SQ-text">Smart Quiz</h3>
-                        <h3 className="createAcct-text">Reset your Password</h3>
+                        <h3 className="createAcct-text">Welcome back to Smart Quiz</h3>
+                        <form onSubmit={(e) => onGoogleSubmit(e)}>
+                            <button className="google-button">
+                                <img id="img6" src="../src/assets/icons/Google.png" />
+                                <span className="googe-text">Sign In with Google</span>
+                            </button>
+                        </form>
                     </div>
                     <div className="form-proper">
                         <form onSubmit={(e) => onSubmit(e)}>
                             <div className="single-input-field">
-                                <label className="label" htmlFor="newPassword">
+                                <label className="label" htmlFor="email">
+                                    Email Address:
+                                </label>
+                                <input
+                                    className="input-field"
+                                    type="email"
+                                    name="email"
+                                    value={email}
+                                    onChange={(e) => onInputChange(e)}
+                                    placeholder="Enter your Email..."
+                                    required
+                                />
+                            </div>
+                            <div className="single-input-field">
+                                <label className="label" htmlFor="password">
                                     Password:
                                 </label>
                                 <input
                                     className="input-field"
                                     type="password"
-                                    name="newPassword"
-                                    value={newPassword}
+                                    name="password"
+                                    value={password}
                                     onChange={(e) => onInputChange(e)}
-                                    placeholder="Enter your new Password..."
+                                    placeholder="Enter your Password..."
                                     required
                                 />
-                            </div>
-                            <div className="single-input-field">
-                                <label className="label" htmlFor="newConfirmPassword">
-                                    Confirm Password:
-                                </label>
-                                <input
-                                    className="input-field"
-                                    type="password"
-                                    name="newConfirmPassword"
-                                    value={newConfirmPassword}
-                                    onChange={(e) => onInputChange(e)}
-                                    placeholder="Re-enter your new Password..."
-                                    required
-                                />
+                                <Link to="/forgot-password">
+                                    <a href="#">Forgot Password</a>
+                                </Link>
                             </div>
                             <button type="submit" className="button-cta">
-                                Reset Password
+                                Login
                             </button>
                         </form>
 
@@ -119,13 +165,7 @@ const ResetP = () => {
                                     {status ? successMessage : errorMessage}
                                 </Modal.Title>
                             </Modal.Header>
-                            <Modal.Body className="modal-body">
-                                <img
-                                    className="email-sent-img"
-                                    src="../src/assets/icons/PasswordUpdateSuccessful.svg"
-                                />
-                                {modalMessage}
-                            </Modal.Body>
+                            <Modal.Body className="modal-body">{modalMessage}</Modal.Body>
                             <Modal.Footer>
                                 <Button
                                     className="modal-close"
@@ -136,13 +176,20 @@ const ResetP = () => {
                                 </Button>
                             </Modal.Footer>
                         </Modal>
+
+                        <p className="alreadyHaveAnAcct">
+                            Already have an account?{" "}
+                            <Link to="/signup">
+                                <a href="#">Sign up here</a>
+                            </Link>
+                        </p>
                     </div>
                 </div>
             </div>
 
-            <div id="img5-resetP" />
+            <div id="img5" />
         </div>
     );
 };
 
-export default ResetP;
+export default SignIn;
