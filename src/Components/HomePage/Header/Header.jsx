@@ -4,29 +4,29 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <div className="main-container">
-      <span className="smart-quiz">Smart Quiz</span>
-      <button className="nav">
-        <div className="frame-1">
-          <a href="#home" className="home">
+    <div className="main-container-header">
+      <span className="smart-quiz-header">Smart Quiz</span>
+      <button className="nav-header">
+        <div className="frame-1-header">
+          <a href="#home" className="home-header">
             Home
           </a>
-          <a href="#about" className="about-us">
+          <a href="#about" className="about-us-header">
             About us
           </a>
-          <a href="#services" className="services">
+          <a href="#services" className="services-header">
             Services
           </a>
-          <a href="#contact" className="contact-us">
+          <a href="#contact" className="contact-us-header">
             Contact Us
           </a>
         </div>
       </button>
-      <div className="stars" />
+      <div className="stars-header-header" />
       <Link to="/signup">
-        <button className="frame-2">
-          <div className="login" />
-          <span className="get-started">Get started</span>
+        <button className="frame-2-header">
+          <div className="login-header" />
+          <span className="get-started-header">Get started</span>
         </button>
       </Link>
     </div>

@@ -91,12 +91,15 @@ const SignIn = () => {
         } catch (error) {
             // Handle the error here
             console.error("Error during Login:", error);
+            const errorMessage =
+                error.response?.data?.message ||
+                "An error occurred during Login. Please try again.";
 
             setStatus(false);
             setErrorMessage("Error");
 
             setShowModal(true);
-            setModalMessage("Go to your email to Verify Registration");
+            setModalMessage(errorMessage);
         }
     };
 
