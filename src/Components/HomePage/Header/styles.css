@@ -20,7 +20,7 @@ button {
   outline: 0;
 }
 
-.main-container {
+.main-container-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -30,7 +30,7 @@ button {
   margin: 0 auto;
   padding: 14px 130px 14px 50px;
 }
-.nav {
+.nav-header {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -47,7 +47,7 @@ button {
   /* overflow: hidden; */
   border-radius: 50px;
 }
-.frame-1 {
+.frame-1-header {
   display: flex;
   align-items: flex-start;
   flex-wrap: nowrap;
@@ -57,7 +57,7 @@ button {
   width: 395px;
   z-index: 4;
 }
-.home {
+.home-header {
   flex-shrink: 0;
   flex-basis: auto;
   position: relative;
@@ -71,7 +71,7 @@ button {
   white-space: nowrap;
   z-index: 5;
 }
-.about-us {
+.about-us-header {
   flex-shrink: 0;
   flex-basis: auto;
   position: relative;
@@ -85,7 +85,7 @@ button {
   white-space: nowrap;
   z-index: 6;
 }
-.services {
+.services-header {
   flex-shrink: 0;
   flex-basis: auto;
   position: relative;
@@ -99,7 +99,7 @@ button {
   white-space: nowrap;
   z-index: 7;
 }
-.contact-us {
+.contact-us-header {
   flex-shrink: 0;
   flex-basis: auto;
   position: relative;
@@ -113,7 +113,7 @@ button {
   white-space: nowrap;
   z-index: 8;
 }
-.stars {
+.stars-header {
   flex-shrink: 0;
   position: relative;
   width: 22.381px;
@@ -122,7 +122,7 @@ button {
   z-index: 2;
   /* overflow: hidden; */
 }
-.frame-2 {
+.frame-2-header {
   display: flex;
   align-items: center;
   flex-wrap: nowrap;
@@ -137,18 +137,18 @@ button {
   z-index: 9;
   border-radius: 8px;
 }
-.login {
+.login-header {
   flex-shrink: 0;
   position: relative;
   width: 24px;
   height: 24px;
-  background: url(src/assets/icons/Group.svg)
+  background: url(../src/assets/icons/Group.svg)
     no-repeat center;
   background-size: cover;
   z-index: 10;
   /* overflow: hidden; */
 }
-.get-started {
+.get-started-header {
   flex-shrink: 0;
   flex-basis: auto;
   position: relative;
@@ -162,7 +162,7 @@ button {
   white-space: nowrap;
   z-index: 11;
 }
-.smart-quiz {
+.smart-quiz-header {
   flex-shrink: 0;
   position: relative;
   height: 24px;
